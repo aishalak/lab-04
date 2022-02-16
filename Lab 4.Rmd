@@ -67,10 +67,17 @@ ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
   geom_point(aplha = 0.5) +
   labs(x = "Cut", y = "Price (US Dollars)", title = "Cut vs. Price")
 ```
+Exercise 5
 ```{r}
-plot <- ggplot(data = diamonds, aes(x = cut, y = price)) + 
-  %>%
-      mutate(obs_num = row_number()) #add observation number for plots
+diamonds %>%
+  group_by(cut) %>% 
+  summarise(mean = mean(price),
+            std_dev = sd(price),
+            num_observations = n()
+  )
 ```
+The table above calculates the number of observations along with the mean and standard deviation of price for each level of cut.
+Exercise 6
+For Diamonds that are 0.5 carats, I would say there is a loose linear relationship between price and cut. Mean price increases as cut goes from other(fair/good), very good, ideal, to premium. However, given the context of this problem, I would be hesistant to say there is a clear linear relationship between price and cut.
 
 
