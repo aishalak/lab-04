@@ -78,6 +78,85 @@ diamonds %>%
 ```
 The table above calculates the number of observations along with the mean and standard deviation of price for each level of cut.
 Exercise 6
-For Diamonds that are 0.5 carats, I would say there is a loose linear relationship between price and cut. Mean price increases as cut goes from other(fair/good), very good, ideal, to premium. However, given the context of this problem, I would be hesistant to say there is a clear linear relationship between price and cut.
+For Diamonds that are 0.5 carats, I would say there is a loose linear relationship between price and cut. Mean price increases as cut goes from other(fair/good), very good, ideal, to premium. However, given the context of this problem, I would be hesitant to say there is a clear linear relationship between price and cut.
+
+#Analysis of Variance
+
+To check the normality assumption, we can create histograms for the four levels of cuts
+against price (compare mean price across levels of cut). If the plots follow a normal distribution, the normality assumption is satsified. 
+```{r}
+fair_good_cut <- diamonds %>%
+  filter(cut == "Other")
+ggplot(data = fair_good_cut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Fair/good Prices ",
+       x = "Price")
+
+very_good_cut <- diamonds %>%
+  filter(cut == "Very Good")
+ggplot(data = very_good_cut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Very Good Prices",
+       x = "Price")
+
+premium_cut <- diamonds %>%
+  filter(cut == "Premium")
+ggplot(data = premium_cut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Premium Prices",
+       x = "Price")
+
+ideal_cut <- diamonds %>%
+  filter(cut == "Ideal")
+ggplot(data = ideal_cut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Ideal Prices",
+       x = "Price")
+
+```
+ I would say the normality assumption is satisfied because these plots all follow a normal distribution, respectively.
+
+There is no formal test to check for independence, so we have to inspect how our data was collected. I would say the independence assumption is satisfied because each observation are not dependent on another.
+
+To test the constant variance assumption, we can create a model and adapt our code above to plot price against the residuals. We can visually inspect the variance by inspecting the length of each boxplot.   
+```{r}
+model <- lm(price ~ cut, data = diamonds)
+tidy(model) %>% 
+  kable(format="markdown", digits=3)
+
+diamonds <- diamonds %>% 
+  mutate(resid = residuals(model))
+
+fair_good_cut <- diamonds %>%
+  filter(cut == "Other")
+ggplot(data = fair_good_cut, aes(x = price, y = resid)) +
+  geom_boxplot() + labs(title = "Good/Fair")
+
+very_good_cut <- diamonds %>%
+  filter(cut == "Very Good")
+ggplot(data = very_good_cut, aes(x = price, y = resid)) +
+  geom_boxplot() + labs(title = "Very Good")
+
+premium_cut <- diamonds %>%
+  filter(cut == "Premium")
+ggplot(data = premium_cut, aes(x = price, y = resid)) +
+  geom_boxplot() + labs(title = "Premium")
+
+ideal_cut <- diamonds %>%
+  filter(cut == "Ideal")
+ggplot(data = ideal_cut, aes(x = price, y = resid)) +
+  geom_boxplot() + labs(title = "Ideal")
+
+
+```
+I would say that the constant variance assumption is not satisfied because the lengths of each boxplot are not the same. If the sample sizes for each cut level were the same, the variance assumption could be satisfied, but in this case they are not. 
+
+Exercise 8
+```{r}
+model <- lm(price ~ cut, data = diamonds)
+kable(anova(model), format="markdown",digits=6)
+```
+Exercise 9
+According to the ANOVA table, the sample mean is 120180.6. 
 
 
