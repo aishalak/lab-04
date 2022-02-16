@@ -1,0 +1,76 @@
+---
+title: "Lab 4"
+author: "Aisha Lakshman"
+date: "2/15/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+# Packages for Lab 4
+```{r}
+library(tidyverse)
+library(knitr)
+library(broom)
+library(ggplot2)
+```
+
+#Exploratory Data Analysis
+Exercise 1
+```{r}
+diamonds <- diamonds %>% filter(carat == 0.5, !is.na(carat))
+```
+The new dataset now has 1258 observations. 
+
+Exercise 2 
+```{r}
+ggplot(diamonds, aes(x = fct_infreq(cut))) + 
+  geom_bar() + 
+  labs (x = "Cut", y = "Observations", title = "Cut Vs Observations") +
+  coord_flip()
+```
+The Cut vs Observations plot indicates that cut levels "fair" and "good" have the least amount of observations. 
+Exercise 3
+```{r}
+diamonds <- diamonds %>% mutate(cut = fct_lump_n(cut, n = 3))
+ggplot(diamonds, aes(x = fct_infreq(cut))) + 
+  geom_bar() + 
+  labs(x = "Cut", y = "Observations", title = "Cut Vs Observations") +
+  coord_flip()
+```
+Exercise 4
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
+  geom_point(aplha = 0.5) +
+  labs(x = "Cut", y = "Price (US Dollars)", title = "Cut vs. Price")
+```
+```{r}
+plot <- ggplot(data = diamonds, aes(x = cut, y = price)) + 
+  %>%
+      mutate(obs_num = row_number()) #add observation number for plots
+```
+
+
