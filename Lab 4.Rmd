@@ -157,6 +157,25 @@ model <- lm(price ~ cut, data = diamonds)
 kable(anova(model), format="markdown",digits=6)
 ```
 Exercise 9
-According to the ANOVA table, the sample mean is 120180.6. 
+According to the ANOVA table, the sample mean for price = 
+The sample variance can be calculated by dividing the sum of squares by the number of observations. According to the ANOVA table, the sum of squares for price is  = 150706506. In exercise 5, we calculated the number of observations for each level of cut. Total observations = 332 + 277 + 388 + 261 = 1258. The code below calculates the sample variance for price based off values in the ANOVA table 
+
+```{r}
+sum_of_sqaures <- 150706506
+obs_num <- 1258
+sample_variance_price <- sum_of_sqaures/obs_num
+sample_variance_price
+```
+Therefore, the sample variance for price is 119798.5. 
+
+Exercise 10
+```{r}
+tidy(model) %>% 
+  kable(format = "markdown", digits = 3)
+
+summary(model)$coef[,2]
+```
+ideal cut variance = 9.893372, premium cut variance = 19.384185, very good cut variance = 19.786744, good/fair cut variance = 20.181275. 
+
 
 
