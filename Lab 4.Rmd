@@ -177,5 +177,21 @@ summary(model)$coef[,2]
 ```
 ideal cut variance = 9.893372, premium cut variance = 19.384185, very good cut variance = 19.786744, good/fair cut variance = 20.181275. 
 
+Exercise 11
+Math notation 
+null_hypothesis = (mean(price: cut = ideal) = (mean(price: cut = premium) = (mean(price: cut = very good) = (mean(price: cut = other).
+alternative_hypothesis = !(mean(price: cut = ideal) = (mean(price: cut = premium) = (mean(price: cut = very good) = (mean(price: cut = other)
+The null hypothesis states that means of price are the same among each level of cut. 
+The alternative hypothesis states that at least one price mean is not equal to other price means among each level of cut.
+
+Exercise 12
+I would reject the null hypothesis and accept the alternative hypothesis because there seems to be a statistically significant relationship between price and level of cut. 
+
+Exercise 13
+I would say no further statistical analysis is required because there is a statistically significant relationship between price and level of cut. 
+
+
+
+
 
 
